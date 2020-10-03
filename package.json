@@ -1,26 +1,92 @@
 {
-  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "name": "counter",
+  "version": "0.1.0",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "node ./node_modules/jest-expo/bin/jest.js",
+    "eslint": "eslint . --ext .js,.ts,.tsx"
   },
   "dependencies": {
     "expo": "~39.0.2",
+    "expo-splash-screen": "~0.6.2",
     "expo-status-bar": "~1.0.2",
+    "expo-updates": "~0.3.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz",
+    "react-native": "~0.63.3",
+    "react-native-gesture-handler": "~1.7.0",
+    "react-native-reanimated": "~1.13.0",
+    "react-native-screens": "~2.10.1",
+    "react-native-unimodules": "~0.11.0",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
-    "react-native-web": "~0.13.7",
+    "@babel/core": "~7.9.0",
+    "@types/jest": "^26.0.14",
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
+    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/parser": "^4.3.0",
+    "babel-jest": "~25.2.6",
+    "codecov": "^3.7.2",
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-import-resolver-babel-module": "^5.1.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.0.2",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.3",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "jest": "~25.2.6",
+    "jest-expo": "^39.0.0",
+    "jest-junit": "^11.1.0",
+    "prettier": "^2.1.2",
+    "react-test-renderer": "~16.13.1",
+    "ts-jest": "^26.4.1",
     "typescript": "~3.9.5"
   },
-  "private": true
+  "jest-junit": {
+    "outputDirectory": "./reports/jest"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "collectCoverage": true,
+    "testRegex": "(/__tests__/(?!.*testdata).*|(\\.|/)(test|spec))\\.[jt]sx?$",
+    "collectCoverageFrom": [
+      "**/*.js",
+      "**/*.ts",
+      "**/*.jsx",
+      "**/*.tsx",
+      "!**/*.testdata.js",
+      "!**/@types/**",
+      "!**/utils/TestHelper.js",
+      "!**/node_modules/**",
+      "!**/lib/*.js",
+      "!**/coverage/**",
+      "!**/jest-setup.js",
+      "!**/babel.config.js"
+    ],
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "setupFiles": [
+      "react-native/jest/setup.js",
+      "jest-expo/src/preset/setup.js"
+    ],
+    "moduleNameMapper": {
+      "^Components(.*)$": "<rootDir>/src/components$1",
+      "^Redux(.*)$": "<rootDir>/src/redux$1",
+      "^Statics(.*)$": "<rootDir>/src/statics$1",
+      "^Resources(.*)$": "<rootDir>/resources$1"
+    }
+  }
 }

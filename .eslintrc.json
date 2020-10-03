@@ -1,0 +1,152 @@
+{
+  "env": {
+    "browser": false,
+    "commonjs": true,
+    "es6": true,
+    "jest/globals": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "airbnb",
+    "plugin:react/recommended",
+    "plugin:jest/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:prettier/recommended",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "prettier/react"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "ecmaVersion": 2018,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": ["react", "jest", "import", "react-hooks", "@typescript-eslint", "prettier"],
+  "globals": {
+    "__DEV__": false,
+    "GLOBAL": false
+  },
+  "rules": {
+    "prettier/prettier": ["error", {
+        "singleQuote": true,
+        "trailingComma": "all",
+        "arrowParens": "always",
+        "useTabs": false,
+        "tabWidth": 2
+    }],
+    "max-len": "off",
+    "prefer-promise-reject-errors": "off",
+    "react/no-did-update-set-state": "off",
+    "global-require": "off",
+    "import/prefer-default-export": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": ["variable","parameter"],
+        "format": ["camelCase"],
+        "leadingUnderscore": "allow"
+      },
+      {
+        "selector": ["function"],
+        "format": ["camelCase","PascalCase"]
+      },
+      {
+        "selector": ["variable"],
+        "modifiers": ["const"],
+        "format": ["camelCase","UPPER_CASE","PascalCase"]
+      },
+      {
+        "selector": ["typeLike"],
+        "format": ["PascalCase"]
+      },
+      {
+        "selector": ["default"],
+        "modifiers": ["readonly"],
+        "format": ["UPPER_CASE"]
+      }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"] }],
+    "import/extensions": [
+      "error",
+      {
+        "js": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "flowtype/space-after-type-colon": "off",
+    "flowtype/no-types-missing-file-annotation": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "no-console": ["warn"],
+    "no-underscore-dangle": ["warn", { "allowAfterThis": true }],
+    "no-plusplus": 0,
+    "prefer-destructuring": [
+      "error",
+      {
+        "VariableDeclarator": {
+          "array": false,
+          "object": true
+        },
+        "AssignmentExpression": {
+          "array": false,
+          "object": true
+        }
+      }
+    ],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+    "import/order": [
+      "error",
+      {
+        "groups": [["builtin", "external"], "internal", ["parent", "sibling", "index"]],
+        "newlines-between": "always-and-inside-groups"
+      }
+    ],
+    "react/forbid-prop-types": 0,
+    "react/sort-comp": [
+      1,
+      {
+        "order": ["type-annotations", "static-methods", "lifecycle", "everything-else", "render"]
+      }
+    ],
+    "react/sort-prop-types": [
+      "error",
+      {
+        "callbacksLast": true,
+        "requiredFirst": false
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {},
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    }
+  }
+}

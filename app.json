@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Counter",
+    "name": "Counter - Counting Utility",
     "slug": "Counter",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,14 +13,16 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hbiede.Counter"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "com.hbiede.Counter"
     }
   }
 }

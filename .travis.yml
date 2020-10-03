@@ -1,0 +1,54 @@
+---
+language: node_js
+node_js:
+  - node
+  - lts/*
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - .jest
+    - .yarn
+script:
+  - yarn global add yarn@latest
+  - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
+
+jobs:
+  include:
+    - stage: test # Test with Jest
+      node_js: lts/*
+      script:
+        - yarn test
+    - # Continue using the 'test' stage to allow linter to run in parallel
+      node_js: lts/*
+      script:
+        - yarn eslint --format junit --output-file ./reports/eslint/eslint.xml
+        - codecov --token=CODECOV_TOKEN
+    - stage: deploy # Deploy to Expo account
+      # Develop branch = beta
+      if: branch = develop
+      node_js: lts/*
+      script:
+        - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
+        - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
+        - yarn expo publish --quiet --non-interactive # Push to the associated Expo account
+    - stage: publish # Build for iOS
+      # Main branch = Release
+      if: branch = main
+      node_js: lts/*
+      before_script:
+        - yarn add expo-cli
+      script:
+        - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
+        - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
+        - expo-cli build:ios --no-publish --type archive --skip-workflow-check --skip-credentials-check
+    - # Build for Android
+        # Main branch = Release
+        if: branch = main
+        node_js: lts/*
+        before_script:
+          - yarn add expo-cli
+        script:
+          - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
+          - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
+          - expo-cli build:ios --no-publish --type archive --skip-workflow-check --skip-credentials-check
