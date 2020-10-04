@@ -18,8 +18,9 @@
     "expo-updates": "~0.3.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-native": "~0.63.3",
-    "react-native-gesture-handler": "~1.7.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz",
+    "react-native-appearance": "~0.3.3",
+    "react-native-haptic-feedback": "^1.10.0",
     "react-native-reanimated": "~1.13.0",
     "react-native-screens": "~2.10.1",
     "react-native-unimodules": "~0.11.0",
@@ -85,6 +86,7 @@
     "moduleNameMapper": {
       "^Components(.*)$": "<rootDir>/src/components$1",
       "^Redux(.*)$": "<rootDir>/src/redux$1",
+      "^Screens(.*)$": "<rootDir>/src/screens$1",
       "^Statics(.*)$": "<rootDir>/src/statics$1",
       "^Resources(.*)$": "<rootDir>/resources$1"
     }

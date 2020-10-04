@@ -14,8 +14,9 @@
     "paths": {
       "Components/*": ["src/components/*"],
       "Redux/*": ["src/redux/*"],
+      "Screens/*": ["src/screens/*"],
       "Statics/*": ["src/statics/*"],
-      "Resources/*": ["resources/*"],
+      "Resources/*": ["resources/*"]
     }
   },
   "include": ["*/*", "*/**/*", "*/**/**/*", "*/**/**/**/*", "*/**/**/**/**/*"]

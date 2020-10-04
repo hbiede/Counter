@@ -1,20 +1,18 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import { registerRootComponent } from 'expo';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import { AppearanceProvider } from 'react-native-appearance';
+
+import CounterScreen from 'Screens/CounterScreen/CounterScreen';
+
+import ThemeProvider from 'Components/ThemeProvider/ThemeProvider';
 
 const App = (): JSX.Element => (
-  <View style={styles.container}>
-    <Text>Open up App.tsx to start working on your app!</Text>
-  </View>
+  <AppearanceProvider>
+    <ThemeProvider>
+      <CounterScreen />
+    </ThemeProvider>
+  </AppearanceProvider>
 );
 
 registerRootComponent(App);

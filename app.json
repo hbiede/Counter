@@ -1,5 +1,6 @@
 {
   "expo": {
+    "entryPoint": "src/App.tsx",
     "name": "Counter - Counting Utility",
     "slug": "Counter",
     "version": "0.1.0",
@@ -16,7 +17,8 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.hbiede.Counter"
+      "bundleIdentifier": "com.hbiede.Counter",
+      "userInterfaceStyle": "automatic"
     },
     "web": {
       "favicon": "./assets/favicon.png"
