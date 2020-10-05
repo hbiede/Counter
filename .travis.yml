@@ -31,7 +31,7 @@ jobs:
       script:
         - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
         - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
-        - yarn expo publish --quiet --non-interactive # Push to the associated Expo account
+        - travis_wait 30 yarn expo publish --quiet --non-interactive # Push to the associated Expo account
     - stage: publish # Build for iOS
       # Main branch = Release
       if: branch = main
@@ -41,7 +41,7 @@ jobs:
       script:
         - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
         - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
-        - expo-cli build:ios --no-publish --type archive --skip-workflow-check --skip-credentials-check
+        - travis_wait 30 expo-cli build:ios --no-publish --type archive --skip-workflow-check --skip-credentials-check
     - # Build for Android
         # Main branch = Release
         if: branch = main
@@ -51,4 +51,4 @@ jobs:
         script:
           - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
           - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
-          - expo-cli build:ios --no-publish --type archive --skip-workflow-check --skip-credentials-check
+          - travis_wait 30 expo-cli build:ios --no-publish --type archive --skip-workflow-check --skip-credentials-check
