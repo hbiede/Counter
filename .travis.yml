@@ -23,7 +23,7 @@ jobs:
       node_js: lts/*
       script:
         - yarn eslint --format junit --output-file ./reports/eslint/eslint.xml
-        - codecov --token=CODECOV_TOKEN
+        - codecov --token=CODECOV_TOKEN --branch $TRAVIS_BRANCH
     - stage: deploy # Deploy to Expo account
       # Develop branch = beta
       if: branch = develop
