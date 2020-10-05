@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "node ./node_modules/jest-expo/bin/jest.js",
-    "eslint": "eslint . --ext .js,.ts,.tsx"
+    "eslint": "eslint . --ext .js,.ts,.tsx",
+    "lc": "git ls-files | egrep \".*\\.(tsx?)\" | egrep -v \"data/lib\" | xargs wc -l | sort"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.0",
