@@ -1,21 +1,35 @@
-import { Dimensions, ViewStyle } from 'react-native';
-
 import { ThemeType } from 'Components/ThemeProvider/DefaultTheme';
-
-const { height, width } = Dimensions.get('window');
+import { StrViewStyle } from 'Components/ThemeProvider/useStyle';
 
 type Style = {
-  container: ViewStyle;
+  addButton: StrViewStyle;
+  container: StrViewStyle;
+  emptyContainer: StrViewStyle;
+  safeAreaContainer: StrViewStyle;
 };
 
 const style = (theme: ThemeType): Style => ({
+  addButton: {
+    backgroundColor: theme.colors.primary,
+    borderRadius: 4,
+    padding: 20,
+  },
   container: {
     alignItems: 'center',
-    backgroundColor: theme.colors.background,
-    flex: 1,
-    height,
     justifyContent: 'center',
-    width,
+    padding: 5,
+    width: '100%',
+  },
+  emptyContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  safeAreaContainer: {
+    backgroundColor: theme.colors.accentBackground,
+    flex: 1,
+    height: '100%',
+    width: '100%',
   },
 });
 

@@ -139,7 +139,8 @@
         "callbacksLast": true,
         "requiredFirst": false
       }
-    ]
+    ],
+    "react/require-default-props": 0
   },
   "settings": {
     "import/resolver": {
