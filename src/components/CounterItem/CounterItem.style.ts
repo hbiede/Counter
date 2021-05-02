@@ -55,8 +55,8 @@ const style = (divisionCount: 1 | 2 | 3 | 4) => (theme: ThemeType): Style => {
     },
     tally: {
       color: theme.colors.secondary,
-      fontSize: '100@ms0.2',
-      lineHeight: '110@ms0.2',
+      fontSize: '90@ms0.2',
+      lineHeight: '95@ms0.2',
       maxWidth: width - 30,
       textAlign: 'center',
     },
