@@ -99,6 +99,9 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-floating-promises": "off",
     "no-console": ["warn"],
     "no-underscore-dangle": ["warn", { "allowAfterThis": true }],
     "no-plusplus": 0,
@@ -136,7 +139,8 @@
         "callbacksLast": true,
         "requiredFirst": false
       }
-    ]
+    ],
+    "react/require-default-props": 0
   },
   "settings": {
     "import/resolver": {

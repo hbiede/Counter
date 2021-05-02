@@ -15,24 +15,21 @@ script:
 
 jobs:
   include:
-    - stage: test # Test with Jest
+    - stage: test
       node_js: lts/*
       script:
-        - yarn test
-    - # Continue using the 'test' stage to allow linter to run in parallel
-      node_js: lts/*
-      script:
-        - yarn eslint --format junit --output-file ./reports/eslint/eslint.xml
-        - codecov --token=CODECOV_TOKEN
+        - yarn lint --format junit --output-file ./reports/eslint/eslint.xml
     - stage: deploy # Deploy to Expo account
       # Develop branch = beta
       if: branch = develop
       node_js: lts/*
+      before_script:
+        - yarn add expo-cli
       script:
         - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
         - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
         - travis_wait 30 yarn expo publish --quiet --non-interactive # Push to the associated Expo account
-    - stage: publish # Build for iOS
+    - stage: build # Build
       # Main branch = Release
       if: branch = main
       node_js: lts/*
@@ -41,14 +38,11 @@ jobs:
       script:
         - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
         - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
-        - travis_wait 30 expo-cli build:ios --no-publish --type archive --skip-workflow-check --skip-credentials-check
-    - # Build for Android
-        # Main branch = Release
-        if: branch = main
-        node_js: lts/*
-        before_script:
-          - yarn add expo-cli
-        script:
-          - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
-          - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
-          - travis_wait 30 expo-cli build:ios --no-publish --type archive --skip-workflow-check --skip-credentials-check
+        - travis_wait 30 yarn expo bi --no-publish --type archive --release-channel stores --skip-credentials-check > buildout.txt
+    - stage: release
+      if: branch = main
+      node_js: lts/*
+      script:
+        - mkdir build
+        - curl --output ./build/Counter.ipa --url $(grep -o https://expo.io/artifacts/.* buildout.txt) -L
+        - bundle exec fastlane release

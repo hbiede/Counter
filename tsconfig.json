@@ -3,7 +3,10 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react-native",
-    "lib": ["dom", "esnext"],
+    "lib": [
+      "dom",
+      "esnext"
+    ],
     "moduleResolution": "node",
     "noEmit": true,
     "strict": true,
@@ -12,11 +15,29 @@
     "noImplicitAny": true,
     "baseUrl": ".",
     "paths": {
-      "Components/*": ["src/components/*"],
-      "Redux/*": ["src/redux/*"],
-      "Statics/*": ["src/statics/*"],
-      "Resources/*": ["resources/*"],
+      "Components/*": [
+        "src/components/*"
+      ],
+      "Redux/*": [
+        "src/redux/*"
+      ],
+      "Screens/*": [
+        "src/screens/*"
+      ],
+      "Statics/*": [
+        "src/statics/*"
+      ],
+      "Resources/*": [
+        "resources/*"
+      ]
     }
   },
-  "include": ["*/*", "*/**/*", "*/**/**/*", "*/**/**/**/*", "*/**/**/**/**/*"]
+  "include": [
+    "*/*",
+    "*/**/*",
+    "*/**/**/*",
+    "*/**/**/**/*",
+    "*/**/**/**/**/*"
+  ],
+  "extends": "expo/tsconfig.base"
 }
