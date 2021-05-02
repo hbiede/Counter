@@ -1,4 +1,0 @@
-yarn run v1.22.10
-$ '/Users/hundterbiede/Desktop/Code/Personal Projects/Counter/node_modules/.bin/expo' ba --no-publish --type apk --release-channel stores
-[?25l[2K[1G[36m?[39m [1mWould you like to proceed?[22m [90m›[39m [90m(Y/n)[39m[2K[1G[2K[1G[31m✖[39m [1mWould you like to proceed?[22m [90m…[39m yes
-[?25hinfo Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
