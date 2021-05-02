@@ -42,6 +42,7 @@ jobs:
         - bundle check || bundle install
         - mkdir build
         - curl --output ./build/Counter.ipa --url $(grep -o https://expo.io/artifacts/.* buildout.txt) -L
+        - echo $KEY_CONTENT > ./build/Key.p8
         - bundle exec fastlane release
     - stage: build_release_android # Build Android
       # Main branch = Release
@@ -54,4 +55,4 @@ jobs:
         - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
         - travis_wait 30 yarn expo ba --skip-workflow-check --no-publish --type apk --release-channel stores > buildout.txt
         - mkdir build
-        - curl --output ./build/Counter.ipa --url $(grep -o https://expo.io/artifacts/.* buildout.txt) -L
+        - curl --output ./build/Counter.apk --url $(grep -o https://expo.io/artifacts/.* buildout.txt) -L
