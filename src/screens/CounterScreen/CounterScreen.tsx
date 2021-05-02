@@ -1,5 +1,5 @@
 import { FlatList, TouchableOpacity, useColorScheme, View } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -12,9 +12,10 @@ import CounterScreenStyle from 'Screens/CounterScreen/CounterScreen.style';
 import useStyle from 'Components/ThemeProvider/useStyle';
 import { CounterItem } from 'Components/CounterItem';
 import { TallyHeader } from 'Components/TallyHeader';
+
 import { AppReduxState } from 'Redux/modules/reducer';
 import { appendCounter } from 'Redux/modules/counters';
-import useTheme from 'Components/ThemeProvider/useTheme';
+import { Counter } from 'Statics/Types';
 
 const CounterScreen = (): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false);
@@ -23,6 +24,16 @@ const CounterScreen = (): JSX.Element => {
   const counters = useSelector(
     (state: AppReduxState) => state.counters.counters,
   );
+
+  const listRef = useRef<FlatList<Counter>>(null);
+  useEffect(() => {
+    if (counters.length === 4 && listRef.current) {
+      listRef.current.scrollToOffset({
+        animated: true,
+        offset: 0,
+      });
+    }
+  }, [counters]);
 
   useEffect(() => {
     if (counters.length === 0 && isEditing) {
@@ -36,7 +47,6 @@ const CounterScreen = (): JSX.Element => {
   }, [dispatch]);
 
   const style = useStyle(CounterScreenStyle);
-  const theme = useTheme();
   const colorScheme = useColorScheme();
   if (counters.length === 0) {
     return (
@@ -52,11 +62,7 @@ const CounterScreen = (): JSX.Element => {
             onPress={addCounterCallback}
             style={style.addButton}
           >
-            <MaterialIcons
-              name="add"
-              color={theme.colors.background}
-              size={30}
-            />
+            <MaterialIcons name="add" color="#FFFFFF" size={30} />
           </TouchableOpacity>
         </View>
       </View>
@@ -83,8 +89,12 @@ const CounterScreen = (): JSX.Element => {
             isEditing={isEditing}
           />
         )}
+        ListHeaderComponent={
+          counters.length > 0 ? <View style={{ height: 10 }} /> : null
+        }
         initialNumToRender={6}
         keyboardShouldPersistTaps="handled"
+        ref={listRef}
       />
     </View>
   );
