@@ -29,7 +29,7 @@ jobs:
         - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
         - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
         - travis_wait 30 yarn expo publish --quiet --non-interactive # Push to the associated Expo account
-    - stage: build # Build
+    - stage: build-ios # Build
       # Main branch = Release
       if: branch = main
       node_js: lts/*
@@ -38,11 +38,27 @@ jobs:
       script:
         - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
         - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
-        - travis_wait 30 yarn expo bi --no-publish --type archive --release-channel stores --skip-credentials-check > buildout.txt
-    - stage: release
+        - travis_wait 30 yarn expo bi --skip-workflow-check --no-publish --type archive --release-channel stores --skip-credentials-check > buildout.txt
+    - stage: release-ios
       if: branch = main
       node_js: lts/*
       script:
         - mkdir build
         - curl --output ./build/Counter.ipa --url $(grep -o https://expo.io/artifacts/.* buildout.txt) -L
         - bundle exec fastlane release
+    - stage: build_android # Build
+      # Main branch = Release
+      if: branch = main
+      node_js: lts/*
+      before_script:
+        - yarn add expo-cli
+      script:
+        - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
+        - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
+        - travis_wait 30 yarn expo ba --skip-workflow-check --no-publish --type apk --release-channel stores > buildout.txt
+    - stage: release-android
+      if: branch = main
+      node_js: lts/*
+      script:
+        - mkdir build
+        - curl --output ./build/Counter.ipa --url $(grep -o https://expo.io/artifacts/.* buildout.txt) -L
