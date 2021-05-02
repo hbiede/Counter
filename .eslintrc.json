@@ -2,14 +2,12 @@
   "env": {
     "browser": false,
     "commonjs": true,
-    "es6": true,
-    "jest/globals": true
+    "es6": true
   },
   "parser": "@typescript-eslint/parser",
   "extends": [
     "airbnb",
     "plugin:react/recommended",
-    "plugin:jest/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
@@ -26,7 +24,7 @@
     },
     "sourceType": "module"
   },
-  "plugins": ["react", "jest", "import", "react-hooks", "@typescript-eslint", "prettier"],
+  "plugins": ["react", "import", "react-hooks", "@typescript-eslint", "prettier"],
   "globals": {
     "__DEV__": false,
     "GLOBAL": false
