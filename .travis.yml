@@ -43,6 +43,7 @@ jobs:
       if: branch = main
       node_js: lts/*
       script:
+        - bundle check || bundle install
         - mkdir build
         - curl --output ./build/Counter.ipa --url $(grep -o https://expo.io/artifacts/.* buildout.txt) -L
         - bundle exec fastlane release
