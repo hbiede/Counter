@@ -81,5 +81,6 @@ buildout.txt
 # Expo
 .expo/*
 web-build/
+buildout.txt
 
 # @end expo-cli

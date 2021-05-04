@@ -11,8 +11,10 @@ type Style = {
   tally: StrTextStyle;
 };
 
-const headerSpace = 50;
+const headerSpace = 70;
 const footerSpace = 100;
+const fontSize = ['0', '140@ms0.2', '120@ms0.2', '100@ms0.2', '90@ms0.2'];
+const lineHeight = ['0', '150@ms0.2', '130@ms0.2', '110@ms0.2', '95@ms0.2'];
 
 const style = (divisionCount: 1 | 2 | 3 | 4) => (theme: ThemeType): Style => {
   const { height, width } = Dimensions.get('window');
@@ -34,7 +36,7 @@ const style = (divisionCount: 1 | 2 | 3 | 4) => (theme: ThemeType): Style => {
         width: 0,
         height: 2,
       },
-      shadowOpacity: 0.25,
+      shadowOpacity: 0.2,
       shadowRadius: 3.84,
       elevation: 5,
     },
@@ -55,8 +57,8 @@ const style = (divisionCount: 1 | 2 | 3 | 4) => (theme: ThemeType): Style => {
     },
     tally: {
       color: theme.colors.secondary,
-      fontSize: '90@ms0.2',
-      lineHeight: '95@ms0.2',
+      fontSize: fontSize[divisionCount],
+      lineHeight: lineHeight[divisionCount],
       maxWidth: width - 30,
       textAlign: 'center',
     },

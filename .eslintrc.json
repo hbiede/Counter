@@ -138,7 +138,8 @@
         "requiredFirst": false
       }
     ],
-    "react/require-default-props": 0
+    "react/require-default-props": 0,
+    "no-void": 0
   },
   "settings": {
     "import/resolver": {

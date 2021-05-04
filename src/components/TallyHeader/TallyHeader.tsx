@@ -43,13 +43,13 @@ const TallyHeader = ({
   const rightButton =
     !isEmpty && !isEditing ? (
       <TouchableOpacity onPress={addCounterCallback}>
-        <MaterialIcons name="add" color={theme.colors.primary} size={30} />
+        <MaterialIcons name="add" color={theme.colors.primary} size={35} />
       </TouchableOpacity>
     ) : (
       <MaterialIcons
         name="add"
         color={theme.colors.primary}
-        size={30}
+        size={35}
         style={{ opacity: 0 }}
       />
     );
