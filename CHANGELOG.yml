@@ -1,0 +1,24 @@
+upcoming:
+  version: 1.1.0
+  date: May 4, 2021
+  dev:
+    - Prevent orientation change on phones
+    - Include the current theme name with ThemeType
+    - Rework apple release tooling
+  user_facing:
+    - Add modal for changing the name and increment value for counters
+    - Add haptic feedback when tapping the counter
+    - Adjust font size as counter card change size
+    - Scroll the FlatList to the top when counters are removed below 4
+
+releases:
+  - version: 1.0.1
+    date: May 3, 2021
+    user_facing:
+      - Fix iPad styling in landscape
+  - version: 1.0.0
+    date: May 2, 2021
+    dev:
+      - Setup dev environment
+    user_facing:
+      - Initial release
