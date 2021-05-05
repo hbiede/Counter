@@ -1,5 +1,6 @@
 import { ExpoConfig, ConfigContext } from '@expo/config';
 
+// noinspection JSUnusedGlobalSymbols
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: 'Counter - Counting Utility',
