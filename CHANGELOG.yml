@@ -1,14 +1,20 @@
 upcoming:
-  version: 1.2.0
-  date: May 18, 2021
+  version:
+  date:
   dev:
     -
   user_facing:
-    - Fix error where modal errors persist closing the modal
-    - Added screen reader support
-    - Added reduced motion support
+    -
 
 releases:
+  - version: 1.2.0
+    date: May 18, 2021
+    dev:
+      -
+    user_facing:
+      - Fix error where modal errors persist closing the modal
+      - Added screen reader support
+      - Added reduced motion support
   - version: 1.1.0
     date: May 4, 2021
     dev:
