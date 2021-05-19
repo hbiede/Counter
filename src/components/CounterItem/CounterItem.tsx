@@ -1,5 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import {
+  AccessibilityActionEvent,
+  AccessibilityInfo,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 
 import { MaterialIcons } from '@expo/vector-icons';
@@ -98,8 +104,12 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
         setError(null);
       } else if (parsedInc !== data.increment) {
         setError('Invalid Increment\n(Must be a positive whole number)');
+        AccessibilityInfo.announceForAccessibility(
+          'Failed to set increment. Increment must be a positive whole number',
+        );
       } else {
         setModalState(ModalState.NONE);
+        setError(null);
       }
     },
     [data, dispatch],
@@ -107,6 +117,39 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
   const onEditIncrement = useCallback(
     () => setModalState(ModalState.INCREMENT),
     [],
+  );
+  const onAccessibilityAction = useCallback(
+    (event: AccessibilityActionEvent) => {
+      // eslint-disable-next-line default-case
+      switch (event.nativeEvent.actionName) {
+        case 'increment':
+          dispatch(
+            updateCounter({
+              ...data,
+              tally: data.tally + data.increment,
+            }),
+          );
+          break;
+        case 'decrement':
+          dispatch(
+            updateCounter({
+              ...data,
+              tally: data.tally - data.increment,
+            }),
+          );
+          break;
+        case 'longpress':
+        case 'longPress':
+        case 'magicTap':
+          dispatch(
+            updateCounter({
+              ...data,
+              tally: 0,
+            }),
+          );
+      }
+    },
+    [data, dispatch],
   );
 
   const style = useStyle(
@@ -131,7 +174,7 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
               : `${data.increment}`
           }
         />
-        <View style={style.background} accessible>
+        <View style={style.background} accessible={false}>
           <TouchableOpacity
             onPress={onEditTitle}
             style={{ paddingHorizontal: 10 }}
@@ -141,6 +184,7 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
               bottom: 20,
               right: 20,
             }}
+            accessibilityHint="Tap to edit counter name"
           >
             <Text style={style.detail}>{data.name}</Text>
           </TouchableOpacity>
@@ -156,10 +200,16 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
               size={45}
               style={style.removeButtonContra}
             />
-            <Text style={style.tally}>
+            <Text style={style.tally} accessible={false}>
               {data.tally > 1e5 ? data.tally.toPrecision(3) : data.tally}
             </Text>
-            <TouchableOpacity style={style.removeButton} onPress={onRemove}>
+            <TouchableOpacity
+              style={style.removeButton}
+              onPress={onRemove}
+              accessible
+              accessibilityLabel="Delete"
+              accessibilityHint="Tap to delete counter"
+            >
               <MaterialIcons
                 name="close"
                 size={45}
@@ -179,7 +229,13 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
               right: 20,
             }}
           >
-            <Text style={style.detail}>{data.increment}</Text>
+            <Text
+              style={style.detail}
+              accessibilityLabel={`increment count: ${data.increment}`}
+              accessibilityRole="adjustable"
+            >
+              {data.increment}
+            </Text>
           </TouchableOpacity>
         </View>
       </>
@@ -189,16 +245,23 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
   return (
     <TouchableOpacity
       onPress={onTap}
-      onAccessibilityTap={onTap}
       style={style.background}
       onLongPress={onReset}
       delayLongPress={1000}
-      accessibilityLiveRegion="assertive"
-      accessibilityLabel={`${data.name} counter`}
-      accessibilityValue={{
-        text: data.name,
-        now: data.tally,
-      }}
+      accessible
+      onAccessibilityTap={onTap}
+      onAccessibilityAction={onAccessibilityAction}
+      accessibilityActions={[
+        { name: 'increment' },
+        { name: 'decrement' },
+        { name: 'longPress' },
+        { name: 'longpress' },
+        { name: 'magicTap' },
+      ]}
+      accessibilityRole="adjustable"
+      accessibilityLabel={`${data.name}. current count: ${Math.abs(
+        data.tally,
+      )}`}
     >
       <Text style={style.detail}>{data.name}</Text>
       <View
@@ -208,11 +271,20 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
           width: '100%',
         }}
       >
-        <Text style={style.tally}>
+        <Text
+          style={style.tally}
+          accessibilityLabel={`current count: ${data.tally}`}
+        >
           {data.tally > 1e5 ? data.tally.toPrecision(3) : data.tally}
         </Text>
       </View>
-      <Text style={[style.detail, { opacity: 0 }]}>{data.increment}</Text>
+      <Text
+        style={[style.detail, { opacity: 0 }]}
+        accessible={false}
+        accessibilityElementsHidden={false}
+      >
+        {data.increment}
+      </Text>
     </TouchableOpacity>
   );
 };

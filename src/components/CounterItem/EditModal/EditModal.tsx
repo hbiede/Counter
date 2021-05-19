@@ -1,5 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  AccessibilityInfo,
+  findNodeHandle,
   SafeAreaView,
   Text,
   TextInput,
@@ -7,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import Modal from 'react-native-modal';
+import { Animation } from 'react-native-animatable';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -50,12 +53,57 @@ const EditModal = ({
 
   const onSaveCallback = useCallback(() => onSave(value), [onSave, value]);
 
+  const [selectTextOnFocus, setSelectTextOnFocus] = useState(true);
+  useEffect(() => {
+    AccessibilityInfo.isScreenReaderEnabled().then((result) =>
+      setSelectTextOnFocus(!result),
+    );
+  }, []);
+  const [animationTime, setAnimationTime] = useState(300);
+  const [animation, setAnimation] = useState<{
+    animateIn?: Animation;
+    animateOut?: Animation;
+  }>({
+    animateIn: undefined,
+    animateOut: undefined,
+  });
+  useEffect(() => {
+    AccessibilityInfo.isReduceMotionEnabled().then((result) => {
+      setAnimationTime(result ? 500 : 300);
+      setAnimation(
+        result
+          ? {
+              animateIn: 'fadeIn' as const,
+              animateOut: 'fadeOut' as const,
+            }
+          : {
+              animateIn: undefined,
+              animateOut: undefined,
+            },
+      );
+    });
+  }, []);
+
+  const errorViewRef = useRef<View>(null);
+  const focusErrorOnAccessibility = useCallback(() => {
+    if (errorViewRef.current) {
+      const reactTag = findNodeHandle(errorViewRef.current);
+      if (reactTag) AccessibilityInfo.setAccessibilityFocus(reactTag);
+    }
+  }, []);
+
   return (
     <SafeAreaView>
       <Modal
         isVisible={isVisible}
         style={[style.container, { marginTop: topMargin }]}
         onBackButtonPress={backButtonCallback}
+        accessibilityViewIsModal
+        onAccessibilityEscape={backButtonCallback}
+        animationIn={animation.animateIn}
+        animationInTiming={animationTime}
+        animationOut={animation.animateOut}
+        animationOutTiming={animationTime}
       >
         <View style={style.headerRow}>
           <TouchableOpacity
@@ -67,10 +115,14 @@ const EditModal = ({
               style={style.headerButton}
             />
           </TouchableOpacity>
-          <Text style={style.titleText}>Set {type}</Text>
+          <Text style={style.titleText} accessible={false}>
+            Set {type}
+          </Text>
           <TouchableOpacity
             style={style.headerButtonContainer}
             onPress={onSaveCallback}
+            accessible
+            accessibilityLabel={`Confirm ${type}`}
           >
             <MaterialIcons name="check" style={style.headerButton} />
           </TouchableOpacity>
@@ -84,12 +136,18 @@ const EditModal = ({
             placeholderTextColor={`${theme.colors.text}88`}
             value={value}
             allowFontScaling
-            selectTextOnFocus
+            selectTextOnFocus={selectTextOnFocus}
             style={style.textInput}
           />
         </View>
         {error && (
-          <View style={style.errorContainer}>
+          <View
+            style={style.errorContainer}
+            accessibilityLiveRegion="assertive"
+            accessibilityRole="alert"
+            ref={errorViewRef}
+            onLayout={focusErrorOnAccessibility}
+          >
             <Text style={style.errorText}>{error}</Text>
           </View>
         )}

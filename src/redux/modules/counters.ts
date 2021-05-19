@@ -13,7 +13,7 @@ type CounterState = Readonly<{
   counters: Counter[];
 }>;
 
-const defaultCounter = {
+export const defaultCounter = {
   increment: 1,
   name: 'New Counter',
   tally: 0,
@@ -45,10 +45,14 @@ export const updateCounter = (counter: Counter): UpdateCounterAction => ({
 
 export interface AppendCounterAction extends AnyAction {
   type: typeof APPEND_COUNTER;
+  counter?: Partial<Counter>;
 }
 
-export const appendCounter = (): AppendCounterAction => ({
+export const appendCounter = (
+  newCounter?: Partial<Counter>,
+): AppendCounterAction => ({
   type: APPEND_COUNTER,
+  counter: newCounter,
 });
 
 export interface RemoveCounterAction extends AnyAction {
@@ -105,6 +109,7 @@ const counterReducer = (
           ...state.counters,
           {
             ...defaultCounter,
+            ...action.counter,
             key: shortid(),
           },
         ],

@@ -14,7 +14,7 @@ import { CounterItem } from 'Components/CounterItem';
 import { TallyHeader } from 'Components/TallyHeader';
 
 import { AppReduxState } from 'Redux/modules/reducer';
-import { appendCounter } from 'Redux/modules/counters';
+import { appendCounter, defaultCounter } from 'Redux/modules/counters';
 import { Counter } from 'Statics/Types';
 
 const CounterScreen = (): JSX.Element => {
@@ -43,8 +43,22 @@ const CounterScreen = (): JSX.Element => {
 
   const dispatch = useDispatch();
   const addCounterCallback = useCallback(() => {
-    dispatch(appendCounter());
-  }, [dispatch]);
+    let newName: string | undefined;
+    if (counters.find(({ name }) => defaultCounter.name === name)) {
+      const regexMatch = new RegExp(
+        `${defaultCounter.name.toLocaleLowerCase()} \\((\\d+)\\)`,
+      );
+      newName = `${defaultCounter.name} (${
+        Math.max(
+          ...counters.map(({ name }) => {
+            const match = regexMatch.exec(name.toLocaleLowerCase());
+            return match ? Number.parseInt(match[1], 10) : 0;
+          }),
+        ) + 1
+      })`;
+    }
+    dispatch(appendCounter({ name: newName }));
+  }, [counters, dispatch]);
 
   const style = useStyle(CounterScreenStyle);
   const colorScheme = useColorScheme();
@@ -61,6 +75,7 @@ const CounterScreen = (): JSX.Element => {
           <TouchableOpacity
             onPress={addCounterCallback}
             style={style.addButton}
+            accessibilityLabel="Add a counter"
           >
             <MaterialIcons name="add" color="#FFFFFF" size={30} />
           </TouchableOpacity>
@@ -76,6 +91,7 @@ const CounterScreen = (): JSX.Element => {
         onSetEditing={onSetEditing}
         isEditing={isEditing}
         isEmpty={counters.length === 0}
+        addCounterCallback={addCounterCallback}
       />
       <FlatList
         contentContainerStyle={style.container}
