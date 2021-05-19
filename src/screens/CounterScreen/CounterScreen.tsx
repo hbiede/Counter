@@ -17,6 +17,8 @@ import { AppReduxState } from 'Redux/modules/reducer';
 import { appendCounter, defaultCounter } from 'Redux/modules/counters';
 import { Counter } from 'Statics/Types';
 
+const MAX_COUNTERS = 4;
+
 const CounterScreen = (): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false);
   const onSetEditing = useCallback(() => setIsEditing(!isEditing), [isEditing]);
@@ -27,11 +29,13 @@ const CounterScreen = (): JSX.Element => {
 
   const listRef = useRef<FlatList<Counter>>(null);
   useEffect(() => {
-    if (counters.length === 4 && listRef.current) {
+    if (counters.length === MAX_COUNTERS && listRef.current) {
       listRef.current.scrollToOffset({
         animated: true,
         offset: 0,
       });
+    } else if (counters.length > MAX_COUNTERS && listRef.current) {
+      listRef.current.scrollToEnd();
     }
   }, [counters]);
 
@@ -57,7 +61,7 @@ const CounterScreen = (): JSX.Element => {
         ) + 1
       })`;
     }
-    dispatch(appendCounter({ name: newName }));
+    dispatch(appendCounter(newName ? { name: newName } : undefined));
   }, [counters, dispatch]);
 
   const style = useStyle(CounterScreenStyle);
@@ -97,11 +101,11 @@ const CounterScreen = (): JSX.Element => {
         contentContainerStyle={style.container}
         data={counters}
         keyExtractor={(counter) => counter.key}
-        scrollEnabled={counters.length > 4}
+        scrollEnabled={counters.length > MAX_COUNTERS}
         renderItem={({ item }) => (
           <CounterItem
             data={item}
-            division={Math.min(4, counters.length) as 1 | 2 | 3 | 4}
+            division={Math.min(MAX_COUNTERS, counters.length) as 1 | 2 | 3 | 4}
             isEditing={isEditing}
           />
         )}

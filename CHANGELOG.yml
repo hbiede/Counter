@@ -1,16 +1,15 @@
 upcoming:
-  version:
-  date:
-  dev:
-    -
-  user_facing:
-    -
+    version: 1.2.1
+    date: May 19, 2021
+    dev:
+      -
+    user_facing:
+      - Fix error with empty names when starting from an empty list
+      - Scroll list when adding counters
 
 releases:
   - version: 1.2.0
     date: May 18, 2021
-    dev:
-      -
     user_facing:
       - Fix error where modal errors persist closing the modal
       - Added screen reader support
