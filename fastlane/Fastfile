@@ -8,6 +8,7 @@ lane :release do
   # Changelog
   readme_data = YAML.safe_load(File.read('../CHANGELOG.yml'))
   change_log_list = readme_data['upcoming']['user_facing'] || []
+  change_log_string = (change_log_list.length() > 0 ? ("- #{change_log_list.join("\n - ")}") : '').freeze
 
   deliver(
     api_key: api_key,
@@ -17,7 +18,8 @@ lane :release do
     automatic_release: true,
     copyright: "#{Time.now.year} Hundter Biede".freeze,
     release_notes: {
-        'default' => (change_log_list.length() > 0 ? ("- #{change_log_list.join("\n - ")}") : '').freeze,
+        'default' => change_log_string,
+        'en-US' => change_log_string,
     },
     run_precheck_before_submit: false,
     precheck_include_in_app_purchases: false,

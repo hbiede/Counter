@@ -10,7 +10,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   entryPoint: 'src/App.tsx',
   privacy: 'public',
   platforms: ['ios', 'android'],
-  version: '1.1.0',
+  version: '1.2.0',
   orientation: 'default',
   icon: './assets/icon.png',
   splash: {
@@ -28,7 +28,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     package: 'com.hbiede.Counter',
-    versionCode: 10100,
+    versionCode: 10200,
     softwareKeyboardLayoutMode: 'resize',
   },
 });
