@@ -8,7 +8,7 @@ lane :release do
   # Changelog
   readme_data = YAML.safe_load(File.read('../CHANGELOG.yml'))
   change_log_list = readme_data['upcoming']['user_facing'] || []
-  change_log_string = (change_log_list.length() > 0 ? ("- #{change_log_list.join("\n - ")}") : '').freeze
+  change_log_string = (change_log_list.length() > 0 ? ("- #{change_log_list.join("\n- ")}") : '').freeze
 
   deliver(
     api_key: api_key,

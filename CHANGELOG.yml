@@ -1,13 +1,17 @@
 upcoming:
-    version: 1.2.1
-    date: May 19, 2021
+    version:
+    date:
     dev:
       -
     user_facing:
-      - Fix error with empty names when starting from an empty list
-      - Scroll list when adding counters
+      -
 
 releases:
+  - version: 1.2.1
+    date: May 19, 2021
+    user_facing:
+      - Fix error with empty names when starting from an empty list
+      - Scroll list when adding counters
   - version: 1.2.0
     date: May 18, 2021
     user_facing:

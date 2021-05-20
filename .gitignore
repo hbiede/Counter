@@ -43,7 +43,6 @@ project.xcworkspace
 
 # Android/IntelliJ
 #
-build/
 .idea
 .gradle
 local.properties
@@ -71,6 +70,7 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 buildout.txt
+buildout*.txt
 
 # Bundle artifacts
 *.jsbundle
@@ -81,6 +81,5 @@ buildout.txt
 # Expo
 .expo/*
 web-build/
-buildout.txt
 
 # @end expo-cli
