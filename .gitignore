@@ -71,6 +71,7 @@ buck-out/
 */fastlane/screenshots
 buildout.txt
 buildout*.txt
+fastlane/api_key.txt
 
 # Bundle artifacts
 *.jsbundle
