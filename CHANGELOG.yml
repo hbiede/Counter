@@ -1,10 +1,10 @@
 upcoming:
-    version:
-    date:
+    version: 1.2.2
+    date: June 13, 2021
     dev:
-      -
+      - Minor tweaks to build tooling
     user_facing:
-      -
+      - Fix VoiceOver label for modal back button
 
 releases:
   - version: 1.2.1

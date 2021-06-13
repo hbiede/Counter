@@ -28,7 +28,7 @@ module.exports = function(api) {
             Redux: './src/redux',
             Screens: './src/screens',
             Statics: './src/statics',
-            Resources: './resources',
+            Assets: './assets',
           },
         },
       ],

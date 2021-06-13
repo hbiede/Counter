@@ -109,6 +109,8 @@ const EditModal = ({
           <TouchableOpacity
             style={style.headerButtonContainer}
             onPress={backButtonCallback}
+            accessible
+            accessibilityLabel={value === propValue ? 'Back' : 'Cancel'}
           >
             <MaterialIcons
               name={value === propValue ? 'chevron-left' : 'close'}

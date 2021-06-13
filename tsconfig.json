@@ -12,7 +12,6 @@
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "noImplicitAny": true,
     "baseUrl": ".",
     "paths": {
       "Components/*": [
@@ -27,8 +26,8 @@
       "Statics/*": [
         "src/statics/*"
       ],
-      "Resources/*": [
-        "resources/*"
+      "Assets/*": [
+        "assets/*"
       ]
     }
   },
