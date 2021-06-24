@@ -3,14 +3,14 @@ import { ExpoConfig, ConfigContext } from '@expo/config';
 // noinspection JSUnusedGlobalSymbols
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'Counter - Counting Utility',
+  name: 'Counter',
   description: 'Quick and Versatile Counter',
   githubUrl: 'https://github.com/hbiede/Counter',
   slug: 'Counter',
   entryPoint: 'src/App.tsx',
   privacy: 'public',
   platforms: ['ios', 'android'],
-  version: '1.2.2',
+  version: '1.2.3',
   orientation: 'default',
   icon: './assets/icon.png',
   splash: {
@@ -28,7 +28,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   android: {
     package: 'com.hbiede.Counter',
-    versionCode: 10202,
+    versionCode: 10203,
     softwareKeyboardLayoutMode: 'resize',
   },
 });
