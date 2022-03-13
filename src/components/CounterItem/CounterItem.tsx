@@ -3,6 +3,7 @@ import {
   AccessibilityActionEvent,
   AccessibilityInfo,
   Text,
+  TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -17,7 +18,9 @@ import useStyle from 'Components/ThemeProvider/useStyle';
 import { Counter } from 'Statics/Types';
 import { removeCounter, updateCounter } from 'Redux/modules/counters';
 import useTheme from 'Components/ThemeProvider/useTheme';
-import EditModal from 'Components/CounterItem/EditModal/EditModal';
+import EditModal, {
+  ModalState,
+} from 'Components/CounterItem/EditModal/EditModal';
 
 type Props = {
   data: Counter;
@@ -25,15 +28,11 @@ type Props = {
   isEditing?: boolean;
 };
 
-const ModalState = {
-  NONE: 'None',
-  TITLE: 'Title',
-  INCREMENT: 'Increment',
-};
-
 const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
   const dispatch = useDispatch();
-  const [currentModalState, setModalState] = useState(ModalState.NONE);
+  const [currentModalState, setModalState] = useState<
+    typeof ModalState[keyof typeof ModalState]
+  >(ModalState.NONE);
   const [error, setError] = useState<string | null>(null);
 
   const onTap = useCallback(() => {
@@ -91,7 +90,6 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
         parsedInc &&
         !Number.isNaN(parsedInc) &&
         Number.isFinite(parsedInc) &&
-        parsedInc > 0 &&
         parsedInc !== data.increment
       ) {
         dispatch(
@@ -103,9 +101,9 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
         setModalState(ModalState.NONE);
         setError(null);
       } else if (parsedInc !== data.increment) {
-        setError('Invalid Increment\n(Must be a positive whole number)');
+        setError('Invalid Increment\n(Must be a whole number)');
         AccessibilityInfo.announceForAccessibility(
-          'Failed to set increment. Increment must be a positive whole number',
+          'Failed to set increment. Increment must be a whole number',
         );
       } else {
         setModalState(ModalState.NONE);
@@ -243,7 +241,7 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
   }
 
   return (
-    <TouchableOpacity
+    <TouchableHighlight
       onPress={onTap}
       style={style.background}
       onLongPress={onReset}
@@ -263,29 +261,31 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
         data.tally,
       )}`}
     >
-      <Text style={style.detail}>{data.name}</Text>
-      <View
-        style={{
-          alignContent: 'center',
-          justifyContent: 'center',
-          width: '100%',
-        }}
-      >
-        <Text
-          style={style.tally}
-          accessibilityLabel={`current count: ${data.tally}`}
+      <>
+        <Text style={style.detail}>{data.name}</Text>
+        <View
+          style={{
+            alignContent: 'center',
+            justifyContent: 'center',
+            width: '100%',
+          }}
         >
-          {data.tally > 1e5 ? data.tally.toPrecision(3) : data.tally}
+          <Text
+            style={style.tally}
+            accessibilityLabel={`current count: ${data.tally}`}
+          >
+            {data.tally > 1e5 ? data.tally.toPrecision(3) : data.tally}
+          </Text>
+        </View>
+        <Text
+          style={[style.detail, { opacity: 0 }]}
+          accessible={false}
+          accessibilityElementsHidden={false}
+        >
+          {data.increment}
         </Text>
-      </View>
-      <Text
-        style={[style.detail, { opacity: 0 }]}
-        accessible={false}
-        accessibilityElementsHidden={false}
-      >
-        {data.increment}
-      </Text>
-    </TouchableOpacity>
+      </>
+    </TouchableHighlight>
   );
 };
 

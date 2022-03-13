@@ -22,13 +22,15 @@ const style = (divisionCount: 1 | 2 | 3 | 4) => (theme: ThemeType): Style => {
   return {
     background: {
       alignItems: 'center',
-      borderColor: theme.colors.border,
+      borderColor:
+        theme.currentTheme === 'light' ? theme.colors.border : undefined,
       borderRadius: 20,
       borderWidth: 1,
       backgroundColor: theme.colors.background,
       height: Math.floor(adjustedHeight / divisionCount),
       justifyContent: 'space-between',
       marginBottom: 10,
+      paddingVertical: 4,
       width: width - 20,
 
       shadowColor: '#000',
