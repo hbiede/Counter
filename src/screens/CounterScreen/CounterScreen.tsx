@@ -1,4 +1,10 @@
-import { FlatList, TouchableOpacity, useColorScheme, View } from 'react-native';
+import {
+  FlatList,
+  InteractionManager,
+  TouchableOpacity,
+  useColorScheme,
+  View,
+} from 'react-native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,16 +34,29 @@ const CounterScreen = (): JSX.Element => {
   );
 
   const listRef = useRef<FlatList<Counter>>(null);
+  const [hasAdded, setHasAdded] = useState(false);
   useEffect(() => {
-    if (counters.length === MAX_COUNTERS && listRef.current) {
-      listRef.current.scrollToOffset({
+    if (hasAdded) {
+      setHasAdded(false);
+      setTimeout(() => {
+        InteractionManager.runAfterInteractions(() => {
+          if (counters.length === MAX_COUNTERS) {
+            listRef.current?.scrollToOffset({
+              animated: true,
+              offset: 0,
+            });
+          } else if (counters.length > MAX_COUNTERS) {
+            listRef.current?.scrollToEnd();
+          }
+        });
+      }, 20);
+    } else if (counters.length <= MAX_COUNTERS) {
+      listRef.current?.scrollToIndex({
         animated: true,
-        offset: 0,
+        index: 0,
       });
-    } else if (counters.length > MAX_COUNTERS && listRef.current) {
-      listRef.current.scrollToEnd();
     }
-  }, [counters]);
+  }, [counters.length, hasAdded]);
 
   useEffect(() => {
     if (counters.length === 0 && isEditing) {
@@ -62,6 +81,7 @@ const CounterScreen = (): JSX.Element => {
       })`;
     }
     dispatch(appendCounter(newName ? { name: newName } : undefined));
+    setHasAdded(true);
   }, [counters, dispatch]);
 
   const style = useStyle(CounterScreenStyle);
@@ -109,9 +129,7 @@ const CounterScreen = (): JSX.Element => {
             isEditing={isEditing}
           />
         )}
-        ListHeaderComponent={
-          counters.length > 0 ? <View style={{ height: 10 }} /> : null
-        }
+        ListHeaderComponent={<View style={{ height: 10 }} />}
         initialNumToRender={6}
         keyboardShouldPersistTaps="handled"
         ref={listRef}

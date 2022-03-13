@@ -8,6 +8,7 @@ export type ThemeType = {
     error: `#${string}`;
     errorText: `#${string}`;
     primary: `#${string}`;
+    primaryAccent: `#${string}`;
     secondary: `#${string}`;
     text: `#${string}`;
   };
@@ -22,6 +23,7 @@ export const lightTheme: ThemeType = {
     error: '#F0B7AD',
     errorText: '#892615',
     primary: '#2262B4',
+    primaryAccent: '#E5E5E5',
     secondary: '#000000',
     text: '#353636',
   },

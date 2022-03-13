@@ -19,12 +19,12 @@ export default (theme: ThemeType): Style => ({
   },
   shadowContainer: {
     backgroundColor: theme.colors.background,
-    shadowOffset: { height: 4, width: 4 },
+    shadowOffset: { height: 4, width: 0 },
     shadowOpacity: theme.currentTheme === 'light' ? 0.25 : 0.75,
     shadowColor: '#000000',
-    shadowRadius: 3,
+    shadowRadius: 8,
     zIndex: 1,
-    elevation: theme.currentTheme === 'light' ? 5 : 9,
+    elevation: 5,
   },
   title: {
     color: theme.colors.primary,

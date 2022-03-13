@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   AccessibilityInfo,
   findNodeHandle,
+  KeyboardAvoidingView,
   SafeAreaView,
   Text,
   TextInput,
@@ -11,8 +12,6 @@ import {
 import Modal from 'react-native-modal';
 import { Animation } from 'react-native-animatable';
 
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
 import { MaterialIcons } from '@expo/vector-icons';
 
 import useStyle from 'Components/ThemeProvider/useStyle';
@@ -21,12 +20,18 @@ import useTheme from 'Components/ThemeProvider/useTheme';
 
 import EditModalStyles from './EditModal.style';
 
+export const ModalState = {
+  NONE: 'None',
+  TITLE: 'Title',
+  INCREMENT: 'Increment',
+} as const;
+
 type Props = {
   backButtonCallback?: () => void;
   error: string | null;
   isVisible: boolean;
   onSave: (newValue: string) => void;
-  type?: string;
+  type?: typeof ModalState[keyof typeof ModalState];
   value?: string;
 };
 
@@ -35,18 +40,29 @@ const EditModal = ({
   error,
   isVisible,
   onSave,
-  type = '',
+  type = ModalState.NONE,
   value: propValue = '',
 }: Props): JSX.Element => {
   const style = useStyle(EditModalStyles);
   const theme = useTheme();
-  const { top: topMargin } = useSafeAreaInsets();
 
   const [value, setValue] = useState(propValue);
   const onValueChange = useCallback(
     (newValue: string) => setValue(newValue),
     [],
   );
+  const invertValue = useCallback(() => {
+    if (value) {
+      if (value?.startsWith('-')) {
+        setValue(value.slice(1));
+      } else {
+        setValue(`-${value}`);
+      }
+    } else {
+      setValue('1');
+    }
+  }, [value]);
+
   useEffect(() => {
     setValue(propValue);
   }, [propValue]);
@@ -96,7 +112,7 @@ const EditModal = ({
     <SafeAreaView>
       <Modal
         isVisible={isVisible}
-        style={[style.container, { marginTop: topMargin }]}
+        style={style.modalContainer}
         onBackButtonPress={backButtonCallback}
         accessibilityViewIsModal
         onAccessibilityEscape={backButtonCallback}
@@ -105,54 +121,70 @@ const EditModal = ({
         animationOut={animation.animateOut}
         animationOutTiming={animationTime}
       >
-        <View style={style.headerRow}>
-          <TouchableOpacity
-            style={style.headerButtonContainer}
-            onPress={backButtonCallback}
-            accessible
-            accessibilityLabel={value === propValue ? 'Back' : 'Cancel'}
-          >
-            <MaterialIcons
-              name={value === propValue ? 'chevron-left' : 'close'}
-              style={style.headerButton}
-            />
-          </TouchableOpacity>
-          <Text style={style.titleText} accessible={false}>
-            Set {type}
-          </Text>
-          <TouchableOpacity
-            style={style.headerButtonContainer}
-            onPress={onSaveCallback}
-            accessible
-            accessibilityLabel={`Confirm ${type}`}
-          >
-            <MaterialIcons name="check" style={style.headerButton} />
-          </TouchableOpacity>
-        </View>
-        <View style={style.textInputContainer}>
-          <TextInput
-            keyboardType={type === 'Increment' ? 'numeric' : 'default'}
-            onSubmitEditing={onSaveCallback}
-            onChangeText={onValueChange}
-            placeholder={propValue}
-            placeholderTextColor={`${theme.colors.text}88`}
-            value={value}
-            allowFontScaling
-            selectTextOnFocus={selectTextOnFocus}
-            style={style.textInput}
-          />
-        </View>
-        {error && (
-          <View
-            style={style.errorContainer}
-            accessibilityLiveRegion="assertive"
-            accessibilityRole="alert"
-            ref={errorViewRef}
-            onLayout={focusErrorOnAccessibility}
-          >
-            <Text style={style.errorText}>{error}</Text>
+        <KeyboardAvoidingView style={style.container}>
+          <View>
+            <View style={style.headerRow}>
+              <TouchableOpacity
+                style={style.headerButtonContainer}
+                onPress={backButtonCallback}
+                accessible
+                accessibilityLabel={value === propValue ? 'Back' : 'Cancel'}
+              >
+                <MaterialIcons
+                  name={value === propValue ? 'chevron-left' : 'close'}
+                  style={style.headerButton}
+                />
+              </TouchableOpacity>
+              <Text style={style.titleText} accessible={false}>
+                Set {type}
+              </Text>
+              <TouchableOpacity
+                style={style.headerButtonContainer}
+                onPress={onSaveCallback}
+                accessible
+                accessibilityLabel={`Confirm ${type}`}
+              >
+                <MaterialIcons name="check" style={style.headerButton} />
+              </TouchableOpacity>
+            </View>
+            <View style={style.textInputContainer}>
+              <TextInput
+                keyboardType={type === 'Increment' ? 'number-pad' : 'default'}
+                onSubmitEditing={onSaveCallback}
+                onChangeText={onValueChange}
+                placeholder={propValue}
+                placeholderTextColor={`${theme.colors.text}88`}
+                value={value}
+                allowFontScaling
+                selectTextOnFocus={selectTextOnFocus}
+                style={style.textInput}
+              />
+            </View>
+            {error && (
+              <View
+                style={style.errorContainer}
+                accessibilityLiveRegion="assertive"
+                accessibilityRole="alert"
+                ref={errorViewRef}
+                onLayout={focusErrorOnAccessibility}
+              >
+                <Text style={style.errorText}>{error}</Text>
+              </View>
+            )}
           </View>
-        )}
+          {type === ModalState.INCREMENT && (
+            <TouchableOpacity
+              style={style.invertButton}
+              onPress={invertValue}
+              accessibilityLabel="Invert value"
+              accessibilityHint="Multiply the increment value by -1"
+            >
+              <Text style={style.invertButtonText} accessible={false}>
+                +/-
+              </Text>
+            </TouchableOpacity>
+          )}
+        </KeyboardAvoidingView>
       </Modal>
     </SafeAreaView>
   );
