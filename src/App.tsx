@@ -1,6 +1,5 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { registerRootComponent } from 'expo';
 import {
   lockAsync,
   OrientationLock,
@@ -44,5 +43,4 @@ const App = (): JSX.Element => {
   );
 };
 
-registerRootComponent(App);
 export default App;

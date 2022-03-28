@@ -11,7 +11,7 @@ cache:
     - .yarn
 script:
   - yarn global add yarn@latest
-  - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
+  - yarn install --frozen-lockfile
 
 jobs:
   include:
@@ -29,23 +29,12 @@ jobs:
         - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
         - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
         - travis_wait 30 yarn expo publish --quiet --release-channel stores --non-interactive # Push to the associated Expo account
-    - stage: build_ios # Build
+    - stage: build # Build
       # Main branch = Release
       if: branch = main
       node_js: lts/*
       before_script:
-        - yarn add expo-cli
+        - yarn add eas-cli
       script:
         - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
-        - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
-        - travis_wait 30 yarn expo bi --skip-workflow-check --no-publish --type archive --release-channel stores --skip-credentials-check
-    - stage: build_android # Build Android
-      # Main branch = Release
-      if: branch = main
-      node_js: lts/*
-      before_script:
-        - yarn add expo-cli
-      script:
-        - yarn install --frozen-lockfile # Clear the project and reinstall using cache for fresh start
-        - yarn expo login --username $EXPO_USERNAME --password $EXPO_PASSWORD
-        - travis_wait 30 yarn expo ba --skip-workflow-check --no-publish --type apk --release-channel stores
+        - travis_wait 30 eas build --platform=all --auto-submit --clear-cache --non-interactive --wait

@@ -3,6 +3,7 @@ upcoming:
     date: June 24, 2021
     dev:
       - Updated to Expo 44
+      - Switched to EAS Build
     user_facing:
       - Allow inverting the counter increment direction
       - Graphical tweaks

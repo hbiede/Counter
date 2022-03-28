@@ -46,6 +46,7 @@
     "@typescript-eslint/parser": "^4.3.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "codecov": "^3.7.2",
+    "eas-cli": "^0.48.2",
     "eslint": "^7.10.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.12.0",

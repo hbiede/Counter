@@ -1,0 +1,29 @@
+{
+  "cli": {
+    "version": ">= 0.48.2"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "releaseChannel": "stores"
+    }
+  },
+  "submit": {
+    "preview": {
+      "ios": {
+        "appleId": "hbiede@gmail.com",
+        "appleTeamId": "69RV8YV62P",
+        "ascAppId": "1534407358"
+      }
+    },
+    "production": {
+      "extends": "preview"
+    }
+  }
+}
