@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - '**.ts'
+      - '**.tsx'
+      - '**.js'
 
 jobs:
   release:
