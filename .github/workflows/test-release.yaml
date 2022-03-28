@@ -13,6 +13,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Test
         uses: dmsi-io/gha-mobile-test@main
+        with:
+          test: 'false'
       - name: Release
         uses: dmsi-io/gha-mobile-release@main
         timeout-minutes: 45
