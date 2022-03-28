@@ -1,0 +1,22 @@
+name: Test and Release
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Install and Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        uses: dmsi-io/gha-mobile-test@main
+      - name: Release
+        uses: dmsi-io/gha-mobile-release@main
+        timeout-minutes: 45
+        with:
+          expo-username: ${{ secrets.EXPO_USERNAME }}
+          expo-password: ${{ secrets.EXPO_PASSWORD }}
+          expo-app-specific-password: ${{ secrets.EXPO_APP_SPECIFIC_PASSWORD }}

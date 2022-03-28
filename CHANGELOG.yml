@@ -4,6 +4,7 @@ upcoming:
     dev:
       - Updated to Expo 44
       - Switched to EAS Build
+      - Switched to Github Actions
     user_facing:
       - Allow inverting the counter increment direction
       - Graphical tweaks

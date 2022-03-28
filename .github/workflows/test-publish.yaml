@@ -1,0 +1,20 @@
+name: Test and Publish
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  publish:
+    name: Install and Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        uses: dmsi-io/gha-mobile-test@main
+      - name: Publish
+        uses: dmsi-io/gha-mobile-publish@main
+        with:
+          expo-username: ${{ secrets.EXPO_USERNAME }}
+          expo-password: ${{ secrets.EXPO_PASSWORD }}

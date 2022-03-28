@@ -1,0 +1,19 @@
+name: Build and Test
+on: [pull_request]
+
+# Kill the workflow if the PR is updated with a new commit
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        uses: dmsi-io/gha-mobile-test@main
+        with:
+          test: 'false'
