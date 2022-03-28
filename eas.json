@@ -11,7 +11,14 @@
       "distribution": "internal"
     },
     "production": {
-      "releaseChannel": "stores"
+      "releaseChannel": "stores",
+      "android": {
+        "image": "latest"
+      },
+      "ios": {
+        "autoIncrement": "buildNumber",
+        "image": "latest"
+      }
     }
   },
   "submit": {

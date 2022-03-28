@@ -10,7 +10,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   entryPoint: 'src/App.tsx',
   privacy: 'public',
   platforms: ['ios', 'android'],
-  version: '1.2.3',
+  version: '1.3.0',
   orientation: 'default',
   icon: './assets/icon.png',
   splash: {
