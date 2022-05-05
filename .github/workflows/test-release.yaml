@@ -26,3 +26,4 @@ jobs:
           expo-username: ${{ secrets.EXPO_USERNAME }}
           expo-password: ${{ secrets.EXPO_PASSWORD }}
           expo-app-specific-password: ${{ secrets.EXPO_APP_SPECIFIC_PASSWORD }}
+          token: ${{ secrets.GITHUB_TOKEN }}
