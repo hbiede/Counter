@@ -80,7 +80,7 @@ const CounterScreen = (): JSX.Element => {
         ) + 1
       })`;
     }
-    dispatch(appendCounter(newName ? { name: newName } : undefined));
+    dispatch(appendCounter(newName ? { name: newName } : {}));
     setHasAdded(true);
   }, [counters, dispatch]);
 

@@ -55,14 +55,17 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
       );
     }
   }, [data, dispatch]);
-  const onRemove = useCallback(() => dispatch(removeCounter(data)), [
-    data,
-    dispatch,
-  ]);
+
+  const onRemove = useCallback(
+    () => dispatch(removeCounter(data)),
+    [data, dispatch],
+  );
+
   const onBackPress = useCallback(() => {
     setModalState(ModalState.NONE);
     setError(null);
   }, []);
+
   const onSetName = useCallback(
     (newName: string | undefined) => {
       if (newName && newName !== data.name) {
@@ -83,6 +86,7 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
     [data, dispatch],
   );
   const onEditTitle = useCallback(() => setModalState(ModalState.TITLE), []);
+
   const onSetIncrement = useCallback(
     (newInc: string | undefined) => {
       const parsedInc = Number.parseInt(newInc ?? '0', 10);

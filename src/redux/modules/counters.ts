@@ -1,14 +1,17 @@
 import 'react-native-get-random-values';
 import { nanoid } from 'nanoid';
 
-import { AnyAction } from 'redux';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Counter } from 'Statics/Types';
 
-const SET_COUNTERS = 'counters:SET_COUNTERS';
-const UPDATE_COUNTER = 'counters:UPDATE_COUNTER';
-const APPEND_COUNTER = 'counters:APPEND_COUNTER';
-const REMOVE_COUNTER = 'counters:REMOVE_COUNTER';
+export type SetCountersAction = Counter[];
+
+export type UpdateCounterAction = Counter;
+
+export type AppendCounterAction = Partial<Counter> | undefined;
+
+export type RemoveCounterAction = Counter;
 
 type CounterState = Readonly<{
   counters: Counter[];
@@ -24,67 +27,55 @@ const initialState: CounterState = {
   counters: [],
 };
 
-export interface SetCountersAction extends AnyAction {
-  type: typeof SET_COUNTERS;
-  counters: Counter[];
-}
-
-export const setCounters = (counters: Counter[]): SetCountersAction => ({
-  type: SET_COUNTERS,
-  counters,
-});
-
-export interface UpdateCounterAction extends AnyAction {
-  type: typeof UPDATE_COUNTER;
-  counter: Counter;
-}
-
-export const updateCounter = (counter: Counter): UpdateCounterAction => ({
-  type: UPDATE_COUNTER,
-  counter,
-});
-
-export interface AppendCounterAction extends AnyAction {
-  type: typeof APPEND_COUNTER;
-  counter?: Partial<Counter>;
-}
-
-export const appendCounter = (
-  newCounter?: Partial<Counter>,
-): AppendCounterAction => ({
-  type: APPEND_COUNTER,
-  counter: newCounter,
-});
-
-export interface RemoveCounterAction extends AnyAction {
-  type: typeof REMOVE_COUNTER;
-  counter: Counter;
-}
-
-export const removeCounter = (counter: Counter): RemoveCounterAction => ({
-  type: REMOVE_COUNTER,
-  counter,
-});
-
-export type CountersAction =
-  | SetCountersAction
-  | UpdateCounterAction
-  | AppendCounterAction
-  | RemoveCounterAction;
-
-const counterReducer = (
-  state = initialState,
-  action: CountersAction,
-): CounterState => {
-  switch (action.type) {
-    case SET_COUNTERS:
-      return {
-        ...state,
-        counters: action.counters,
-      };
-    case UPDATE_COUNTER: {
+const counterReducerSlice = createSlice({
+  name: 'Counter',
+  initialState,
+  reducers: {
+    appendCounter: (
+      state: CounterState,
+      action: PayloadAction<AppendCounterAction>,
+    ): CounterState => ({
+      ...state,
+      counters: [
+        ...state.counters,
+        {
+          ...defaultCounter,
+          ...(action.payload || {}),
+          key: nanoid(),
+        },
+      ],
+    }),
+    removeCounter: (
+      state: CounterState,
+      action: PayloadAction<RemoveCounterAction>,
+    ): CounterState => {
       const matchingCounterIndex = state.counters.findIndex(
-        (counter) => counter.key === action.counter.key,
+        (counter) => counter.key === action.payload.key,
+      );
+      if (matchingCounterIndex >= 0) {
+        return {
+          ...state,
+          counters: [
+            ...state.counters.slice(0, matchingCounterIndex),
+            ...state.counters.slice(matchingCounterIndex + 1),
+          ],
+        };
+      }
+      return state;
+    },
+    setCounter: (
+      state: CounterState,
+      action: PayloadAction<SetCountersAction>,
+    ): CounterState => ({
+      ...state,
+      counters: action.payload,
+    }),
+    updateCounter: (
+      state: CounterState,
+      action: PayloadAction<UpdateCounterAction>,
+    ): CounterState => {
+      const matchingCounterIndex = state.counters.findIndex(
+        (counter) => counter.key === action.payload.key,
       );
       if (matchingCounterIndex >= 0) {
         // replace
@@ -92,7 +83,7 @@ const counterReducer = (
           ...state,
           counters: [
             ...state.counters.slice(0, matchingCounterIndex),
-            action.counter,
+            action.payload,
             ...state.counters.slice(matchingCounterIndex + 1),
           ],
         };
@@ -100,39 +91,11 @@ const counterReducer = (
       // append
       return {
         ...state,
-        counters: [...state.counters, action.counter],
+        counters: [...state.counters, action.payload],
       };
-    }
-    case APPEND_COUNTER:
-      return {
-        ...state,
-        counters: [
-          ...state.counters,
-          {
-            ...defaultCounter,
-            ...action.counter,
-            key: nanoid(),
-          },
-        ],
-      };
-    case REMOVE_COUNTER: {
-      const matchingCounterIndex = state.counters.findIndex(
-        (counter) => counter.key === action.counter.key,
-      );
-      if (matchingCounterIndex >= 0) {
-        return {
-          ...state,
-          counters: [
-            ...state.counters.slice(0, matchingCounterIndex),
-            ...state.counters.slice(matchingCounterIndex + 1),
-          ],
-        };
-      }
-      return state;
-    }
-    default:
-      return state;
-  }
-};
-
-export default counterReducer;
+    },
+  },
+});
+export const { appendCounter, removeCounter, setCounter, updateCounter } =
+  counterReducerSlice.actions;
+export default counterReducerSlice.reducer;

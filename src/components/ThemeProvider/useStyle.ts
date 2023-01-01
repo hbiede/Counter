@@ -55,6 +55,6 @@ const getStyles = <S>(styles: StyleFunc<S>, theme: ThemeType): S => {
 const useStyle = <S>(style: StyleFunc<S>): Style<S> =>
   useRef(memoizeOne(ScaledSheet.create)).current(
     getStyles<S>(style, useTheme()),
-  );
+  ) as Style<S>;
 
 export default useStyle;

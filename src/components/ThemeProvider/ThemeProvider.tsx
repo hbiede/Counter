@@ -10,10 +10,10 @@ type Props = {
   theme?: ThemeType;
 };
 
-const ThemeProvider: React.FC<Props> = ({
+const ThemeProvider: React.FC<PropsWithChildren<Props>> = ({
   children,
   theme,
-}: PropsWithChildren<Props>): ReactElement => {
+}): ReactElement => {
   const colorScheme = useColorScheme();
   const currentTheme = useMemo((): ThemeType => {
     if (theme === undefined) {
