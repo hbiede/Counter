@@ -7,6 +7,7 @@ on:
       - '**.ts'
       - '**.tsx'
       - '**.js'
+      - 'test-release.yaml'
 
 jobs:
   release:
@@ -14,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Test
         uses: dmsi-io/gha-mobile-test@main
         with:
@@ -23,7 +24,8 @@ jobs:
         uses: dmsi-io/gha-mobile-release@main
         timeout-minutes: 45
         with:
-          expo-username: ${{ secrets.EXPO_USERNAME }}
-          expo-password: ${{ secrets.EXPO_PASSWORD }}
           expo-app-specific-password: ${{ secrets.EXPO_APP_SPECIFIC_PASSWORD }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          expo-token: ${{ secrets.EXPO_TOKEN }}
+          git-token: ${{ secrets.GITHUB_TOKEN }}
+          increment-build-number: 'false'
+          profile: 'production'

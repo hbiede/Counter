@@ -28,6 +28,7 @@ const App = (): JSX.Element => {
       },
     );
   }
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
