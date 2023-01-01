@@ -1,3 +1,4 @@
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   InteractionManager,
@@ -5,7 +6,6 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 

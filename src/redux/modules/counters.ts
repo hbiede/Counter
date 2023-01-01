@@ -1,4 +1,5 @@
-import shortid from 'shortid';
+import 'react-native-get-random-values';
+import { nanoid } from 'nanoid';
 
 import { AnyAction } from 'redux';
 
@@ -110,7 +111,7 @@ const counterReducer = (
           {
             ...defaultCounter,
             ...action.counter,
-            key: shortid(),
+            key: nanoid(),
           },
         ],
       };
