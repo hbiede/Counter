@@ -1,11 +1,12 @@
 import React from 'react';
+import { AppearanceProvider } from 'react-native-appearance';
 import { Provider } from 'react-redux';
+
 import {
   lockAsync,
   OrientationLock,
   supportsOrientationLockAsync,
 } from 'expo-screen-orientation';
-import { AppearanceProvider } from 'react-native-appearance';
 
 import { PersistGate } from 'redux-persist/integration/react';
 
