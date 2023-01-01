@@ -4,6 +4,7 @@ upcoming:
     dev:
       - Updated to Expo 47
       - Converted redux actions to slices
+      - Remove deprecated dependency
     user_facing:
       - Bug fixes and performance enhancements
 

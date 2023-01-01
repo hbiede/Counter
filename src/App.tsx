@@ -1,5 +1,4 @@
 import React from 'react';
-import { AppearanceProvider } from 'react-native-appearance';
 import { Provider } from 'react-redux';
 
 import {
@@ -34,11 +33,9 @@ const App = (): JSX.Element => {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <SafeAreaProvider>
-          <AppearanceProvider>
-            <ThemeProvider>
-              <CounterScreen />
-            </ThemeProvider>
-          </AppearanceProvider>
+          <ThemeProvider>
+            <CounterScreen />
+          </ThemeProvider>
         </SafeAreaProvider>
       </PersistGate>
     </Provider>

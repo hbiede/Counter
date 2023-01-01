@@ -33,6 +33,9 @@
       "versionCode": 10301,
       "softwareKeyboardLayoutMode": "resize"
     },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
     "extra": {
       "eas": {
         "projectId": "2bc8e381-5b34-4f55-ab86-4bd2de63a06e"
