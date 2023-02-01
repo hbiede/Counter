@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import {
   AccessibilityActionEvent,
   AccessibilityInfo,
+  Alert,
   Text,
   TouchableHighlight,
   TouchableOpacity,
@@ -47,12 +48,23 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
   const onReset = useCallback(() => {
     if (data.tally !== 0) {
       void impactAsync(ImpactFeedbackStyle.Heavy);
-      dispatch(
-        updateCounter({
-          ...data,
-          tally: 0,
-        }),
-      );
+      Alert.alert('Reset?', 'Would you like to reset the count to zero?', [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            dispatch(
+              updateCounter({
+                ...data,
+                tally: 0,
+              }),
+            );
+          },
+        },
+      ]);
     }
   }, [data, dispatch]);
 

@@ -33,7 +33,7 @@
   },
   "include": [
     "src",
-    "app.json",
+    "app.config.ts",
     "index.js"
   ],
   "extends": "expo/tsconfig.base"

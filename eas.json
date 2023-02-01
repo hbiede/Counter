@@ -1,36 +1,49 @@
 {
   "cli": {
-    "version": ">= 3.0.0"
+    "version": ">= 3.3.0",
+    "promptToConfigurePushNotifications": false
   },
   "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
-    },
     "production": {
-      "releaseChannel": "stores",
+      "channel": "production",
       "android": {
+        "buildType": "app-bundle",
         "image": "latest"
       },
       "ios": {
-        "autoIncrement": "buildNumber",
         "image": "latest"
+      }
+    },
+    "preview": {
+      "developmentClient": true,
+      "extends": "production",
+      "distribution": "internal",
+      "channel": "default",
+      "env": {
+        "APP_VARIANT": "internal_development"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "resourceClass": "m1-medium"
+      }
+    },
+    "devclient": {
+      "extends": "preview",
+      "channel": "devclient",
+      "ios": {
+        "simulator": true
       }
     }
   },
   "submit": {
-    "preview": {
+    "production": {
       "ios": {
         "appleId": "hbiede@gmail.com",
         "appleTeamId": "69RV8YV62P",
         "ascAppId": "1534407358"
       }
-    },
-    "production": {
-      "extends": "preview"
     }
   }
 }

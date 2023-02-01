@@ -16,10 +16,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Test
         uses: dmsi-io/gha-mobile-test@main
         with:
           test: 'false'
+
       - name: Release
         uses: dmsi-io/gha-mobile-release@main
         timeout-minutes: 45
@@ -27,5 +29,5 @@ jobs:
           expo-app-specific-password: ${{ secrets.EXPO_APP_SPECIFIC_PASSWORD }}
           expo-token: ${{ secrets.EXPO_TOKEN }}
           git-token: ${{ secrets.GITHUB_TOKEN }}
-          increment-build-number: 'false'
+          increment-build-number: 'true'
           profile: 'production'

@@ -1,5 +1,13 @@
 upcoming:
-  version: 1.3.1
+  version: 1.3.2
+    date: February 1, 2023
+    dev:
+      -
+    user_facing:
+      - Fix crash when editing count metadata
+
+releases:
+  - version: 1.3.1
     date: January 1, 2023
     dev:
       - Updated to Expo 47
@@ -7,8 +15,6 @@ upcoming:
       - Remove deprecated dependency
     user_facing:
       - Bug fixes and performance enhancements
-
-releases:
   - version: 1.3.0
     date: June 24, 2021
     dev:

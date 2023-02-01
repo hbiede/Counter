@@ -10,13 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
       - name: Test
         uses: dmsi-io/gha-mobile-test@main
         with:
           test: 'false'
+
       - name: Publish
         uses: dmsi-io/gha-mobile-publish@main
         with:
+          branch: 'default'
           expo-username: ${{ secrets.EXPO_USERNAME }}
           expo-password: ${{ secrets.EXPO_PASSWORD }}

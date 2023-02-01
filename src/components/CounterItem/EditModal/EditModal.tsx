@@ -104,22 +104,24 @@ const EditModal = ({
   const focusErrorOnAccessibility = useCallback(() => {
     if (errorViewRef.current) {
       const reactTag = findNodeHandle(errorViewRef.current);
-      if (reactTag) AccessibilityInfo.setAccessibilityFocus(reactTag);
+      if (reactTag) {
+        AccessibilityInfo.setAccessibilityFocus(reactTag);
+      }
     }
   }, []);
 
   return (
     <SafeAreaView>
       <Modal
-        isVisible={isVisible}
-        style={style.modalContainer}
-        onBackButtonPress={backButtonCallback}
         accessibilityViewIsModal
-        onAccessibilityEscape={backButtonCallback}
         animationIn={animation.animateIn}
         animationInTiming={animationTime}
         animationOut={animation.animateOut}
         animationOutTiming={animationTime}
+        isVisible={isVisible}
+        onAccessibilityEscape={backButtonCallback}
+        onBackButtonPress={backButtonCallback}
+        style={style.modalContainer}
       >
         <KeyboardAvoidingView style={style.container}>
           <View>
