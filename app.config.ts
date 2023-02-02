@@ -19,7 +19,7 @@ const config: ExpoConfig = {
     backgroundColor: '#2262B4',
   },
   ios: {
-    buildNumber: '1',
+    buildNumber: '2',
     bundleIdentifier: IS_INT_DEV
       ? 'com.hbiede.intDev.Counter'
       : 'com.hbiede.Counter',

@@ -24,6 +24,7 @@ reports/*
 # Xcode
 #
 build/
+dist/
 *.pbxuser
 !default.pbxuser
 *.mode1v3
