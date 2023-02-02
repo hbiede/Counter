@@ -32,7 +32,7 @@ type Props = {
 const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
   const dispatch = useDispatch();
   const [currentModalState, setModalState] = useState<
-    typeof ModalState[keyof typeof ModalState]
+    (typeof ModalState)[keyof typeof ModalState]
   >(ModalState.NONE);
   const [error, setError] = useState<string | null>(null);
 

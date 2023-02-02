@@ -31,7 +31,7 @@ type Props = {
   error: string | null;
   isVisible: boolean;
   onSave: (newValue: string) => void;
-  type?: typeof ModalState[keyof typeof ModalState];
+  type?: (typeof ModalState)[keyof typeof ModalState];
   value?: string;
 };
 

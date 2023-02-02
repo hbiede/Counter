@@ -10,7 +10,7 @@ const config: ExpoConfig = {
   entryPoint: './index.js',
   privacy: 'public',
   platforms: ['ios', 'android'],
-  version: '2.17.1',
+  version: '1.3.2',
   orientation: 'default',
   icon: './assets/icon.png',
   splash: {
