@@ -4,12 +4,15 @@ import memoizeOne from 'memoize-one';
 import {
   ImageStyle,
   RegisteredStyle,
+  StyleSheet,
   TextStyle,
   ViewStyle,
 } from 'react-native';
 
 import useTheme from 'Components/ThemeProvider/useTheme';
 import { ThemeType } from 'Components/ThemeProvider/DefaultTheme';
+
+import NamedStyles = StyleSheet.NamedStyles;
 
 type StyleFunc<S> = ((theme: ThemeType) => S) | S;
 
@@ -41,20 +44,25 @@ export type StrViewStyle = Omit<ViewStyle, keyof StringifiedStyles> &
 export type StrImageStyle = Omit<ImageStyle, keyof StringifiedStyles> &
   Omit<StringifiedStyles, Exclude<keyof StringifiedStyles, keyof ImageStyle>>;
 
-const getStyles = <S>(styles: StyleFunc<S>, theme: ThemeType): S => {
+const getStyles = <S extends NamedStyles<unknown>>(
+  styles: StyleFunc<S>,
+  theme: ThemeType,
+): S => {
   if (styles instanceof Function) {
     return styles(theme);
   }
 
-  if (styles !== null && styles instanceof Object) {
+  if (styles !== null) {
     return styles;
   }
   return {} as S;
 };
 
-const useStyle = <S>(style: StyleFunc<S>): Style<S> =>
+const useStyle = <S extends NamedStyles<unknown>>(
+  style: StyleFunc<S>,
+): Style<S> =>
   useRef(memoizeOne(ScaledSheet.create)).current(
     getStyles<S>(style, useTheme()),
-  ) as Style<S>;
+  ) as unknown as Style<S>;
 
 export default useStyle;
