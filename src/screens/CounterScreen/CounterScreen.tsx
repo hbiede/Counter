@@ -85,16 +85,18 @@ const CounterScreen = (): JSX.Element => {
   }, [counters, dispatch]);
 
   const style = useStyle(CounterScreenStyle);
-  const colorScheme = useColorScheme();
-  if (counters.length === 0) {
-    return (
-      <View style={style.safeAreaContainer}>
-        <StatusBar style={colorScheme === 'light' ? 'dark' : 'light'} />
-        <TallyHeader
-          onSetEditing={onSetEditing}
-          isEditing={isEditing}
-          isEmpty={counters.length === 0}
-        />
+  return (
+    <View style={style.safeAreaContainer}>
+      <StatusBar style={useColorScheme() === 'light' ? 'dark' : 'light'} />
+      <TallyHeader
+        addCounterCallback={
+          counters.length === 0 ? undefined : addCounterCallback
+        }
+        isEditing={isEditing}
+        isEmpty={counters.length === 0}
+        onSetEditing={onSetEditing}
+      />
+      {counters.length === 0 ? (
         <View style={style.emptyContainer}>
           <TouchableOpacity
             onPress={addCounterCallback}
@@ -104,36 +106,27 @@ const CounterScreen = (): JSX.Element => {
             <MaterialIcons name="add" color="#FFFFFF" size={30} />
           </TouchableOpacity>
         </View>
-      </View>
-    );
-  }
-
-  return (
-    <View style={style.safeAreaContainer}>
-      <StatusBar style={colorScheme === 'light' ? 'dark' : 'light'} />
-      <TallyHeader
-        onSetEditing={onSetEditing}
-        isEditing={isEditing}
-        isEmpty={counters.length === 0}
-        addCounterCallback={addCounterCallback}
-      />
-      <FlatList
-        contentContainerStyle={style.container}
-        data={counters}
-        keyExtractor={(counter) => counter.key}
-        scrollEnabled={counters.length > MAX_COUNTERS}
-        renderItem={({ item }) => (
-          <CounterItem
-            data={item}
-            division={Math.min(MAX_COUNTERS, counters.length) as 1 | 2 | 3 | 4}
-            isEditing={isEditing}
-          />
-        )}
-        ListHeaderComponent={<View style={{ height: 10 }} />}
-        initialNumToRender={6}
-        keyboardShouldPersistTaps="handled"
-        ref={listRef}
-      />
+      ) : (
+        <FlatList
+          contentContainerStyle={style.container}
+          data={counters}
+          keyExtractor={(counter) => counter.key}
+          scrollEnabled={counters.length > MAX_COUNTERS}
+          renderItem={({ item }) => (
+            <CounterItem
+              data={item}
+              division={
+                Math.min(MAX_COUNTERS, counters.length) as 1 | 2 | 3 | 4
+              }
+              isEditing={isEditing}
+            />
+          )}
+          ListHeaderComponent={<View style={{ height: 10 }} />}
+          initialNumToRender={6}
+          keyboardShouldPersistTaps="handled"
+          ref={listRef}
+        />
+      )}
     </View>
   );
 };

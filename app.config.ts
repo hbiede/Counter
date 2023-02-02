@@ -36,7 +36,7 @@ const config: ExpoConfig = {
   android: {
     package: IS_INT_DEV ? 'com.hbiede.intDev.Counter' : 'com.hbiede.Counter',
     softwareKeyboardLayoutMode: 'resize',
-    versionCode: 10301,
+    versionCode: 10302,
   },
   assetBundlePatterns: [
     'resources/**',
