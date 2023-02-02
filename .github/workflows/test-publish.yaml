@@ -21,5 +21,4 @@ jobs:
         uses: dmsi-io/gha-mobile-publish@main
         with:
           branch: 'default'
-          expo-username: ${{ secrets.EXPO_USERNAME }}
-          expo-password: ${{ secrets.EXPO_PASSWORD }}
+          expo-token: ${{ secrets.EXPO_TOKEN }}

@@ -28,6 +28,4 @@ jobs:
         with:
           expo-app-specific-password: ${{ secrets.EXPO_APP_SPECIFIC_PASSWORD }}
           expo-token: ${{ secrets.EXPO_TOKEN }}
-          git-token: ${{ secrets.GITHUB_TOKEN }}
-          increment-build-number: 'true'
           profile: 'production'
