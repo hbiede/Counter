@@ -1,5 +1,4 @@
 # Counter - Counting Utility
-[![Test and Release](https://github.com/hbiede/Counter/actions/workflows/test-release.yaml/badge.svg)](https://github.com/hbiede/Counter/actions/workflows/test-release.yaml)
 
 Quick and Versatile Counter app
 
