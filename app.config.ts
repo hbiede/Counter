@@ -1,4 +1,4 @@
-import { ExpoConfig } from '@expo/config-types';
+import type { ExpoConfig } from '@expo/config-types';
 
 const IS_INT_DEV = process.env.APP_VARIANT === 'internal_development';
 
@@ -7,10 +7,11 @@ const config: ExpoConfig = {
   description: 'Quick and Versatile Counter',
   githubUrl: 'https://github.com/hbiede/Counter',
   slug: 'Counter',
-  entryPoint: './index.js',
+  entryPoint: './index.ts',
   privacy: 'public',
   platforms: ['ios', 'android'],
-  version: '1.3.2',
+  version: '1.4.0',
+  runtimeVersion: '1.4.0',
   orientation: 'default',
   icon: './assets/icon.png',
   splash: {
@@ -19,7 +20,7 @@ const config: ExpoConfig = {
     backgroundColor: '#2262B4',
   },
   ios: {
-    buildNumber: '2',
+    buildNumber: '1',
     bundleIdentifier: IS_INT_DEV
       ? 'com.hbiede.intDev.Counter'
       : 'com.hbiede.Counter',
@@ -36,7 +37,7 @@ const config: ExpoConfig = {
   android: {
     package: IS_INT_DEV ? 'com.hbiede.intDev.Counter' : 'com.hbiede.Counter',
     softwareKeyboardLayoutMode: 'resize',
-    versionCode: 10302,
+    versionCode: 10400,
   },
   assetBundlePatterns: [
     'resources/**',
@@ -52,9 +53,18 @@ const config: ExpoConfig = {
     url: 'https://u.expo.dev/2bc8e381-5b34-4f55-ab86-4bd2de63a06e',
   },
   jsEngine: IS_INT_DEV ? 'jsc' : 'hermes',
-  runtimeVersion: {
-    policy: 'sdkVersion',
-  },
+  plugins: [
+    'expo-font',
+    'expo-splash-screen',
+    [
+      'expo-build-properties',
+      {
+        ios: {
+          enableSceneSupport: true,
+        },
+      },
+    ],
+  ],
 };
 
 export default config;

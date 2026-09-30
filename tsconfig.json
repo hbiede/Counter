@@ -34,7 +34,9 @@
   "include": [
     "src",
     "app.config.ts",
-    "index.js"
+    "eslint.config.mjs",
+    "prettier.config.mjs",
+    "index.ts"
   ],
   "extends": "expo/tsconfig.base"
 }

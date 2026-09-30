@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { type JSX, useCallback, useState } from 'react';
+import type { AccessibilityActionEvent } from 'react-native';
 import {
-  AccessibilityActionEvent,
   AccessibilityInfo,
   Alert,
   Text,
@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 
 import CounterItemStyle from 'Components/CounterItem/CounterItem.style';
 import useStyle from 'Components/ThemeProvider/useStyle';
-import { Counter } from 'Statics/Types';
+import type { Counter } from 'Statics/Types';
 import { removeCounter, updateCounter } from 'Redux/modules/counters';
 import useTheme from 'Components/ThemeProvider/useTheme';
 import EditModal, {
@@ -134,7 +134,6 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
   );
   const onAccessibilityAction = useCallback(
     (event: AccessibilityActionEvent) => {
-      // eslint-disable-next-line default-case
       switch (event.nativeEvent.actionName) {
         case 'increment':
           dispatch(
@@ -259,7 +258,6 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
   return (
     <TouchableHighlight
       onPress={onTap}
-      style={style.background}
       onLongPress={onReset}
       delayLongPress={1000}
       accessible
@@ -277,7 +275,7 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
         data.tally,
       )}`}
     >
-      <>
+      <View style={style.background}>
         <Text style={style.detail}>{data.name}</Text>
         <View
           style={{
@@ -300,7 +298,7 @@ const CounterItem = ({ data, division = 1, isEditing }: Props): JSX.Element => {
         >
           {data.increment}
         </Text>
-      </>
+      </View>
     </TouchableHighlight>
   );
 };

@@ -1,17 +1,15 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  FlatList,
-  InteractionManager,
-  TouchableOpacity,
-  useColorScheme,
-  View,
-} from 'react-native';
+import React, {
+  type JSX,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
 
 import { MaterialIcons } from '@expo/vector-icons';
-
-import { StatusBar } from 'expo-status-bar';
 
 import CounterScreenStyle from 'Screens/CounterScreen/CounterScreen.style';
 
@@ -19,9 +17,9 @@ import useStyle from 'Components/ThemeProvider/useStyle';
 import { CounterItem } from 'Components/CounterItem';
 import { TallyHeader } from 'Components/TallyHeader';
 
-import { AppReduxState } from 'Redux/modules/reducer';
+import type { AppReduxState } from 'Redux/modules/reducer';
 import { appendCounter, defaultCounter } from 'Redux/modules/counters';
-import { Counter } from 'Statics/Types';
+import type { Counter } from 'Statics/Types';
 
 const MAX_COUNTERS = 4;
 
@@ -39,7 +37,7 @@ const CounterScreen = (): JSX.Element => {
     if (hasAdded) {
       setHasAdded(false);
       setTimeout(() => {
-        InteractionManager.runAfterInteractions(() => {
+        requestIdleCallback(() => {
           if (counters.length === MAX_COUNTERS) {
             listRef.current?.scrollToOffset({
               animated: true,
@@ -87,7 +85,6 @@ const CounterScreen = (): JSX.Element => {
   const style = useStyle(CounterScreenStyle);
   return (
     <View style={style.safeAreaContainer}>
-      <StatusBar style={useColorScheme() === 'light' ? 'dark' : 'light'} />
       <TallyHeader
         addCounterCallback={
           counters.length === 0 ? undefined : addCounterCallback

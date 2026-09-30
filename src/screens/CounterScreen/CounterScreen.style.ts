@@ -1,5 +1,5 @@
-import { ThemeType } from 'Components/ThemeProvider/DefaultTheme';
-import { StrViewStyle } from 'Components/ThemeProvider/useStyle';
+import type { ThemeType } from 'Components/ThemeProvider/DefaultTheme';
+import type { StrViewStyle } from 'Components/ThemeProvider/useStyle';
 
 type Style = {
   addButton: StrViewStyle;

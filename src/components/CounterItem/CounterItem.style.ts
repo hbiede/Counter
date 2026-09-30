@@ -1,7 +1,10 @@
 import { Dimensions } from 'react-native';
 
-import { ThemeType } from 'Components/ThemeProvider/DefaultTheme';
-import { StrTextStyle, StrViewStyle } from 'Components/ThemeProvider/useStyle';
+import type { ThemeType } from 'Components/ThemeProvider/DefaultTheme';
+import type {
+  StrTextStyle,
+  StrViewStyle,
+} from 'Components/ThemeProvider/useStyle';
 
 type Style = {
   background: StrViewStyle;

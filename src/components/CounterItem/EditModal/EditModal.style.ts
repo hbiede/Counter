@@ -1,7 +1,10 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { StrTextStyle, StrViewStyle } from 'Components/ThemeProvider/useStyle';
-import { ThemeType } from 'Components/ThemeProvider/DefaultTheme';
+import type {
+  StrTextStyle,
+  StrViewStyle,
+} from 'Components/ThemeProvider/useStyle';
+import type { ThemeType } from 'Components/ThemeProvider/DefaultTheme';
 
 type Styles = {
   container: StrViewStyle;

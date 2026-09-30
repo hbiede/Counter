@@ -1,8 +1,10 @@
-import React, { ReactElement, PropsWithChildren, useMemo } from 'react';
+import type { ReactElement, PropsWithChildren } from 'react';
+import React, { useMemo } from 'react';
 
 import { useColorScheme } from 'react-native';
 
-import { darkTheme, lightTheme, ThemeType } from './DefaultTheme';
+import type { ThemeType } from './DefaultTheme';
+import { darkTheme, lightTheme } from './DefaultTheme';
 
 const ThemeContext = React.createContext(lightTheme);
 

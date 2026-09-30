@@ -1,4 +1,4 @@
-import { useColorScheme } from 'react-native';
+import type { useColorScheme } from 'react-native';
 
 export type ThemeType = {
   colors: {

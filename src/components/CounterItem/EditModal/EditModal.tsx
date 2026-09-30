@@ -1,16 +1,22 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  type JSX,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   AccessibilityInfo,
   findNodeHandle,
   KeyboardAvoidingView,
-  SafeAreaView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import { Animation } from 'react-native-animatable';
+import type { Animation } from 'react-native-animatable';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -111,18 +117,18 @@ const EditModal = ({
   }, []);
 
   return (
-    <SafeAreaView>
-      <Modal
-        accessibilityViewIsModal
-        animationIn={animation.animateIn}
-        animationInTiming={animationTime}
-        animationOut={animation.animateOut}
-        animationOutTiming={animationTime}
-        isVisible={isVisible}
-        onAccessibilityEscape={backButtonCallback}
-        onBackButtonPress={backButtonCallback}
-        style={style.modalContainer}
-      >
+    <Modal
+      accessibilityViewIsModal
+      animationIn={animation.animateIn}
+      animationInTiming={animationTime}
+      animationOut={animation.animateOut}
+      animationOutTiming={animationTime}
+      isVisible={isVisible}
+      onAccessibilityEscape={backButtonCallback}
+      onBackButtonPress={backButtonCallback}
+      style={style.modalContainer}
+    >
+      <SafeAreaView>
         <KeyboardAvoidingView style={style.container}>
           <View>
             <View style={style.headerRow}>
@@ -187,8 +193,8 @@ const EditModal = ({
             </TouchableOpacity>
           )}
         </KeyboardAvoidingView>
-      </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Modal>
   );
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type JSX } from 'react';
 import { Provider } from 'react-redux';
 
 import {
@@ -9,7 +9,7 @@ import {
 
 import { PersistGate } from 'redux-persist/integration/react';
 
-import { SafeAreaProvider } from 'react-native-safe-area-context/src/SafeAreaContext';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Platform } from 'react-native';
 

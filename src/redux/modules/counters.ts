@@ -1,9 +1,10 @@
 import 'react-native-get-random-values';
 import { nanoid } from 'nanoid';
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-import { Counter } from 'Statics/Types';
+import type { Counter } from 'Statics/Types';
 
 export type SetCountersAction = Counter[];
 
