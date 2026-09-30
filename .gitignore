@@ -26,6 +26,7 @@ reports/*
 #
 build/
 dist/
+ios/
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -49,6 +50,7 @@ project.xcworkspace
 .gradle
 local.properties
 *.iml
+android/
 
 # node.js
 #

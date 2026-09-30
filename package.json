@@ -8,7 +8,8 @@
     "lc": "git ls-files | egrep \".*\\.(tsx?)\" | egrep -v \"data/lib\" | xargs wc -l | sort",
     "lint": "eslint . --ext .js,.ts,.tsx",
     "localTest": "tsc && yarn lint",
-    "ios": "APP_VARIANT=\"internal_development\" expo start --dev-client"
+    "ios": "APP_VARIANT=\"internal_development\" expo start --dev-client",
+    "setVersion": "eas build:version:set"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
